@@ -1,17 +1,17 @@
 import UserModel from "../../models/User";
 
-export default function AddNewSchoolUsecase(school) {
+export default function addNewSchoolUsecase(newSchoolData) {
     async function Execute() {
-        const newSchool=new UserModel({
-            name: school.name,
-            city: school.city,
-            address: schoo.address,
+        const schoolModel=new UserModel({
+            name: newSchoolData.name,
+            city: newSchoolData.city,
+            address: newSchoolData.address,
         });
-        await newSchool.save((error, school) => {
+        await schoolModel.save((error, newSchool) => {
             if (error) {
                 return error;
             }
-            return school;
+            return newSchool;
         });
     }
     return {
