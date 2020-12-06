@@ -1,34 +1,41 @@
-import SignInUserUsecase from "../usecases/users/signInUser";
-import SignUpUserUsecase from "../usecases/users/signUpUser";
+import getAllUsersUsecase from '../usecases/users/getAllUsers';
+import SignInUserUsecase from '../usecases/users/signInUser';
+import SignUpUserUsecase from '../usecases/users/signUpUser';
 
 export default function UserController() {
 
-    const getAllUsers = (request, response, next) => {
-        const getAllUsers = getAllUsersUsecase();
-        getAllUsers.Execute().then((users) => {
+    const getAllUsers = async (request, response, next) => {
+        const allUsers = getAllUsersUsecase();
+        await allUsers.Execute().then((users) => {
             response.status(200).json(users);
         }, (error) => {
-            next(error);
+            response.status(500).json(
+                { error }
+            );
         });
     };
 
-    const SignInUser = (request, response, next) => {
-        const signinData=request.body;
+    const SignInUser = async (request, response, next) => {
+        const signinData = request.body;
         const signinUser = SignInUserUsecase(signinData);
-        signinUser.Execute().then((signin) => {
+        await signinUser.Execute().then((signin) => {
             response.status(200).json(signin);
         }, (error) => {
-            next(error);
+            response.status(500).json(
+                { error }
+            );
         });
     };
 
-    const SignUpUser = (request, response, next) => {
-        const newUserData=request.body;
+    const SignUpUser = async (request, response, next) => {
+        const newUserData = request.body;
         const signupUser = SignUpUserUsecase(newUserData);
-        signupUser.Execute().then((newUser) => {
-            response.status(200).json(newUser);
+        await signupUser.Execute().then((newUser) => {
+            response.status(201).json(newUser);
         }, (error) => {
-            next(error);
+            response.status(500).json(
+                { error }
+            );
         });
     };
 

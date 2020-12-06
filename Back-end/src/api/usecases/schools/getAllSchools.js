@@ -1,24 +1,19 @@
-import SchoolModel from "../../models/School";
-import buildSchoolResponse from "../../utils/BuildSchoolResponse";
+import SchoolModel from '../../models/School';
 
 export default function getAllSchoolsUsecase() {
 
-    async function Execute() {
-        await SchoolModel.find({}, (error, schools) => {
+    function Execute() {
+        return SchoolModel.find({}, {
+            _id: 0, name: 1, city: 1, address: 1
+        }, (error, schools) => {
             if (schools.length > 0 && schools) {
-                const result = {
-                    schools : schools.map((school) => {
-                        return buildSchoolResponse(school);
-                    })
-                }
-                return result;
-            } else {
-                return { message: "No school found" };
+                return schools;
             }
+            return { message: 'No school found' };
         }).catch((error) => {
             console.log(error);
             return {
-                error: error
+                error
             };
         });
 

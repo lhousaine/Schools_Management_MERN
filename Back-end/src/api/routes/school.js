@@ -1,11 +1,15 @@
-import express, { request, response } from 'express';
 import SchoolController from '../controllers/SchoolController';
 
-export default function schoolRouter() {
+const express = require('express');
+
+export default function SchoolRouter() {
 
     const router = express.Router();
 
     const schoolController = SchoolController();
+
+    router.route('/:schoolName')
+        .get(schoolController.getSchoolByName);
 
     router.route('/')
         .get(schoolController.getAllSchools);
@@ -13,8 +17,5 @@ export default function schoolRouter() {
     router.route('/')
         .post(schoolController.addNewSchool);
 
-    router.route('/:schoolName')
-        .get(schoolController.addNewSchool);
-        
     return router;
 }

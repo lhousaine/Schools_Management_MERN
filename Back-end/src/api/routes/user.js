@@ -1,5 +1,6 @@
-import express, { request, response } from 'express';
 import UserController from '../controllers/UserController';
+
+const express = require('express');
 
 export default function UserRouter() {
 
@@ -11,10 +12,10 @@ export default function UserRouter() {
         .get(userController.getAllUsers);
 
     router.route('/sign-up')
-        .post(userController.SignInUser());
+        .post(userController.SignUpUser);
 
-    router.route('/sign-up')
-        .post(userController.SignUpUser());
-        
+    router.route('/sign-in')
+        .post(userController.SignInUser);
+
     return router;
 }

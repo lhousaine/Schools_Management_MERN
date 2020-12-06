@@ -1,8 +1,9 @@
-import UserModel from "../../models/User";
+import UserModel from '../../models/User';
+import buildUserResponse from '../../utils/BuildUserResponse';
 
 export default function SignUpUserUsecase(user) {
     async function Execute() {
-        const userModel=new UserModel({
+        const userModel = new UserModel({
             firstName: user.firstName,
             lastName: user.lastName,
             age: user.age,
@@ -12,12 +13,11 @@ export default function SignUpUserUsecase(user) {
             password: user.password,
             isAdmin: false
         });
-
-        await userModel.save((error, newUser) => {
-            if (error) {
-                return error;
-            }
-            return newUser;
+        // eslint-disable-next-line no-return-await
+        return await userModel.save().then((newUser) => {
+            return buildUserResponse(newUser);
+        }, (error) => {
+            return error;
         });
     }
     return {

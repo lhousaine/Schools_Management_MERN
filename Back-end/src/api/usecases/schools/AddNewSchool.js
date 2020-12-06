@@ -1,17 +1,18 @@
-import UserModel from "../../models/User";
+import SchoolModel from '../../models/School';
 
 export default function addNewSchoolUsecase(newSchoolData) {
     async function Execute() {
-        const schoolModel=new UserModel({
+        console.log('hello world');
+        const schoolModel = new SchoolModel({
             name: newSchoolData.name,
             city: newSchoolData.city,
             address: newSchoolData.address,
         });
-        await schoolModel.save((error, newSchool) => {
-            if (error) {
-                return error;
-            }
+        // eslint-disable-next-line no-return-await
+        return await schoolModel.save().then((newSchool) => {
             return newSchool;
+        }, (error) => {
+            return error;
         });
     }
     return {

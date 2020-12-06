@@ -1,23 +1,22 @@
-import UserModel from "../../models/User";
+import UserModel from '../../models/User';
 
 export default function SignInUserUsecase(signinData) {
     async function Execute() {
-        await UserModel.findOne({
+        // eslint-disable-next-line no-return-await
+        return await UserModel.findOne({
             email: signinData.email,
             password: signinData.password
-        }).then(signinUser =>{
+        }).then((signinUser) => {
             return {
-                _id: signinUser.id,
                 firstName: signinUser.firstName,
                 lastName: signinUser.lastName,
                 email: signinUser.email,
-                address: signinUser.address,
+                age: signinUser.age,
                 school: signinUser.school,
                 isAdmin: signinUser.isAdmin,
-                token: getToken(signinUser)
-            }
-        }
-        ).catch((error)=>{
+                // token: getToken(signinUser)
+            };
+        }, (error) => {
             return error;
         });
     }

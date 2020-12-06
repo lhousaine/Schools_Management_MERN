@@ -1,13 +1,24 @@
-import express, { request, response } from 'express';
+import SchoolRouter from './school';
+import UserRouter from './user';
+import HelloRouter from './hello';
 
-const apiRouter = () => {
-    const routes = express.Router();
+const express = require('express');
 
-    const userRouter = userRouter;
+export default function ApiRouter() {
 
-    routes.use('/repositories', repositoryRouter);
+    const router = express.Router();
 
-    return routes;
-};
+    const helloRouter = HelloRouter();
+    const schoolRouter = SchoolRouter();
+    const userRouter = UserRouter();
 
-export default apiRouter;
+    router.get('/greeting', async (req, res) => {
+        res.status(200).json({ message: 'Hello world' });
+    });
+
+    router.use('/hello', helloRouter);
+    router.use('/schools', schoolRouter);
+    router.use('/users', userRouter);
+
+    return router;
+}
