@@ -17,6 +17,7 @@ export default function UserController() {
 
     const SignInUser = async (request, response, next) => {
         const signinData = request.body;
+        console.log('try sign in');
         const signinUser = SignInUserUsecase(signinData);
         await signinUser.Execute().then((signin) => {
             response.status(200).json(signin);
