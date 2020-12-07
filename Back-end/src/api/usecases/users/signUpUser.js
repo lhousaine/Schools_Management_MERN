@@ -11,7 +11,7 @@ export default function SignUpUserUsecase(user) {
             school: user.school,
             email: user.email,
             password: user.password,
-            isAdmin: false
+            isAdmin: user.isAdmin
         });
         // eslint-disable-next-line no-return-await
         return await userModel.save().then((newUser) => {
