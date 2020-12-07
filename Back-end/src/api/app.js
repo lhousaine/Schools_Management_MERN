@@ -10,6 +10,10 @@ const mongodbUrl = config.MONGODB_URL;
 const app = express();
 const apiRouter = ApiRouter();
 
+// swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 mongoose.connect(mongodbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -35,7 +39,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', apiRouter);
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.listen(port, () => {
     console.log('school app listening at port : ', port);
 });
