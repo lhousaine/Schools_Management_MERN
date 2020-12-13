@@ -2,7 +2,6 @@ import SchoolModel from '../../models/School';
 
 export default function addNewSchoolUsecase(newSchoolData) {
     async function Execute() {
-        console.log('hello world');
         const schoolModel = new SchoolModel({
             name: newSchoolData.name,
             city: newSchoolData.city,

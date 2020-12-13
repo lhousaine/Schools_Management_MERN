@@ -1,4 +1,6 @@
 import SchoolController from '../controllers/SchoolController';
+import isAuthenticated from '../utils/auth/authenticated';
+import isAdmin from '../utils/auth/authorized';
 
 const express = require('express');
 
@@ -9,13 +11,12 @@ export default function SchoolRouter() {
     const schoolController = SchoolController();
 
     router.route('/:schoolName')
-        .get(schoolController.getSchoolByName);
+        .get(isAuthenticated, schoolController.getSchoolByName);
 
     router.route('/')
         .get(schoolController.getAllSchools);
 
-    router.route('/')
-        .post(schoolController.addNewSchool);
+    router.post('/', isAuthenticated, isAdmin, schoolController.addNewSchool);
 
     return router;
 }

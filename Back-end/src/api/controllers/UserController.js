@@ -21,8 +21,8 @@ export default function UserController() {
         await signinUser.Execute().then((signin) => {
             response.status(200).json(signin);
         }, (error) => {
-            response.status(500).json(
-                { error }
+            response.status(404).json(
+                { error: error.message }
             );
         });
     };
@@ -34,7 +34,7 @@ export default function UserController() {
             response.status(201).json(newUser);
         }, (error) => {
             response.status(500).json(
-                { error }
+                { error: error.message }
             );
         });
     };

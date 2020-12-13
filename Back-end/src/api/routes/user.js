@@ -1,4 +1,6 @@
 import UserController from '../controllers/UserController';
+import isAuthenticated from '../utils/auth/authenticated';
+import isAdmin from '../utils/auth/authorized';
 
 const express = require('express');
 
@@ -8,14 +10,11 @@ export default function UserRouter() {
 
     const userController = UserController();
 
-    router.route('/')
-        .get(userController.getAllUsers);
+    router.get('/', isAuthenticated, isAdmin, userController.getAllUsers);
 
-    router.route('/sign-up')
-        .post(userController.SignUpUser);
+    router.post('/sign-up', userController.SignUpUser);
 
-    router.route('/sign-in')
-        .post(userController.SignInUser);
+    router.post('/sign-in', userController.SignInUser);
 
     return router;
 }
